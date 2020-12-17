@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 
 @app.route('/auth/', methods=['GET'])
-def login():
+def auth():
     return "post to /auth/login/ json{username: str}", 200
 
 @app.route('/auth/login/', methods=['POST'])
