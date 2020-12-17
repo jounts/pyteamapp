@@ -6,7 +6,7 @@ from flask import request
 app = Flask(__name__)
 
 
-@app.route('/auth/', methods=['POST'])
+@app.route('/auth/', methods=['GET'])
 def login():
     return "post to /auth/login/ json{username: str}", 200
 
