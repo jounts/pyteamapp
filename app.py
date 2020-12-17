@@ -1,4 +1,5 @@
-import datetime, re
+import datetime
+import re
 
 from flask import Flask
 from flask import jsonify
@@ -12,6 +13,7 @@ app = Flask(__name__)
 def auth():
     return "post to /auth/login/ json{username: str}", 200
 
+
 @app.route('/auth/login/', methods=['POST'])
 def login():
     username = password = ''
@@ -24,7 +26,7 @@ def login():
             password = request.get_json()["password"]
 
         if account_exists(username, password):
-            session_id = create_session_id(username)
+            session_id = create_session_id()
             return make_response(jsonify({'sessionid': session_id}), 200)
 
         return "Invalid username/password supplied", 400
@@ -36,10 +38,9 @@ def account_exists(usr, pwd):
     return False
 
 
-def create_session_id(username: str):
+def create_session_id():
     """
     Create session id function
-    :param username: str
     :return: str
     """
     non_decimal = re.compile(r'[^\d]+')
