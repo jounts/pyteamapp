@@ -25,27 +25,12 @@ def login():
             username = request.get_json()["username"]
             password = request.get_json()["password"]
 
-        if account_exists(username, password):
-            session_id = create_session_id()
+        if username == 'admin' and password == 'admin':
+            non_decimal = re.compile(r'[^\d]+')
+            session_id = non_decimal.sub('', str(datetime.datetime.now()))[:20]
             return make_response(jsonify({'sessionid': session_id}), 200)
 
         return "Invalid username/password supplied", 400
-
-
-def account_exists(usr, pwd):
-    if usr == 'admin' and pwd == 'admin':
-        return True
-    return False
-
-
-def create_session_id():
-    """
-    Create session id function
-    :return: str
-    """
-    non_decimal = re.compile(r'[^\d]+')
-    current_datetime = non_decimal.sub('', str(datetime.datetime.now()))[:20]
-    return current_datetime
 
 
 if __name__ == '__main__':
